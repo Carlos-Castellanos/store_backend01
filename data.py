@@ -47,7 +47,7 @@ mock_data = [
         "img": "garlic.jpg",
         "stock": 13,
         "discount": 5,
-        "category": "veggies "
+        "category": "veggies"
      },
     {"id": 7,
         "title": "Granade",

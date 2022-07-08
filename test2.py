@@ -127,6 +127,28 @@ def test2():
             print(use["name"])
 
 
+
+def test3():
+    print("----- Test 3 -----")
+    prices = [123,3,23,6475,58,89,45,34,87,34,-12,23, 123,-23,-123, 0, 123, 0, -29, 10]
+    
+    # find the mos expensive product
+    maxPrice=max(prices)
+    print("function max " + str(maxPrice))
+    
+    maxPrice=prices[0]
+    for i in prices:
+        if i>maxPrice:
+            maxPrice=i
+            
+    print("for loop " + str(maxPrice))
+    return True
+
+
+
+
+
 # start_test()
 # test1()
-test2()
+#test2()
+test3()
