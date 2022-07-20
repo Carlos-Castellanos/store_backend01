@@ -1,9 +1,12 @@
-from flask import Flask
+
+import re
+from flask import Flask, request
 from unittest import mock
 from webbrowser import get
 from about import me
 from data import mock_data
 import json
+import random
 
 
 app = Flask('server')
@@ -11,7 +14,7 @@ app = Flask('server')
 
 @app.get('/')
 def home():
-    return "hello flask server: Organika!!"
+    return "Hello flask server: Organika <FSDI 110 class 1>"
 
 
 @app.get('/test')
@@ -40,6 +43,24 @@ def about():
 @app.get('/api/products')
 def catalog():
     return json.dumps(mock_data)
+
+
+#july 19 post
+
+# Request cycled, server was restarted and working
+@app.post("/api/products")
+def save_product():
+    try:
+        data = request.get_json()
+        print(data)
+        mock_data.append(data)
+        data["id"] = random.randint(1, 999999)
+        return json.dumps(data)
+    except ValueError as error:
+        print("invalid json: %s" % error)
+        return False
+
+
 
 # - GET /api/products/<id> endpoint that returns the products with such id
 
@@ -115,6 +136,29 @@ def categories():
 #         if product["category"] not in categories:
 #             categories.append(product["category"])  
 #     return json.dumps(categories)
+
+
+#19-jul class 1  110
+# get retrun the number of prod in the catalog
+# /api/count_products 
+@app.get('/api/count_products')
+def get_count_products():
+    count = len(mock_data)
+    return json.dumps({"count":count})
+
+
+#get /api/search/<text
+#return all prod whose title contains text
+@app.get('/api/search/<text>')
+def search_products(text):
+    listProducts = []
+    text = text.lower()
+    for product in mock_data:
+        if text in product["title"].lower():
+            listProducts.append(product);
+    return json.dumps(listProducts)
+
+
 
 
 
