@@ -17,7 +17,7 @@ mac:
 
 win:
     venv\Scripts\activate
-
+http://127.0.0.1:5000/api/products
 
 
 # install flask
@@ -50,3 +50,18 @@ git push -u origin master/main
 
 # next time
 git push
+
+
+mongo
+#python -m pip install pymongo
+#pip install dnspython
+
+#python -m pip install pymongo flask-pymongo "pymongo[srv]"
+#python -m pip install certifi
+# verify your ip address permitted
+
+    cursor = db.catalog.find({})
+    results = []
+    for prod in cursor:
+        fix_mongo_id(prod)
+        results.append(prod)
