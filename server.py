@@ -7,9 +7,10 @@ import json
 import random
 from config import db
 from bson import ObjectId
+from flask_cors import CORS
 
 app = Flask('server')
-
+CORS(app)
 
 @app.get('/')
 def home():
@@ -74,6 +75,33 @@ def save_product():
         print("invalid json: %s" % error)
         return False
 
+
+# Request cycled, server was restarted and working
+
+@app.get('/api/coupons')
+def get_coupons():
+    # collection´s names coupons
+    cursor = db.coupons.find({})
+    results = []
+    for coupon in cursor:
+        fix_mongo_id(coupon)
+        results.append(coupon)
+    return json.dumps(results)
+
+@app.post("/api/coupons")
+def save_coupon():
+    try:
+        newCoupon = request.get_json()
+        print(newCoupon)
+
+        # save the coupon
+        db.coupons.insert_one(newCoupon)
+        fix_mongo_id(newCoupon)
+        print(newCoupon)
+        return json.dumps(newCoupon)
+    except ValueError as error:
+        print("invalid json: %s" % error)
+        return False
 
 
 # - GET /api/products/<id> endpoint that returns the products with such id
@@ -195,7 +223,8 @@ def search_products(text):
             listProducts.append(product);
     return json.dumps(listProducts)
 
-
+# /////////////////////////////////
+#### api endpoint coupon codes#####
 
 
 

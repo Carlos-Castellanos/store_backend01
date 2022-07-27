@@ -65,3 +65,6 @@ mongo
     for prod in cursor:
         fix_mongo_id(prod)
         results.append(prod)
+
+
+py -m pip install flask-cors
