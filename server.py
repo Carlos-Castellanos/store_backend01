@@ -201,6 +201,7 @@ def categories():
 #19-jul class 1  110
 # get retrun the number of prod in the catalog
 # /api/count_products 
+
 @app.get('/api/count_products')
 def get_count_products():
     cursor = db.catalog.find({})
